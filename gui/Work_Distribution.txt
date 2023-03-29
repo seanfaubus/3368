@@ -1,0 +1,14 @@
+PHASE 1
+--------------------------------------------------------------------------------
+For the final project, Sean Faubus(16230) and Aryan Dham(15369) will be working together.
+
+    Sean made the tables and inserted the data into them using MySQL Workbench. He also made the CRUD operations for the
+planes table. As well as the login API. Aryan was responsible for the remaining CRUD operations for the airports and
+flights tables.
+
+PHASE 2
+--------------------------------------------------------------------------------
+   For the phase 2, Sean made the login page, the flights page with all functionality as well the display, add a plane
+and update functionalities for planes page. Aryan, on the other hand was in charge of working on the delete functions of
+planes page as well as the entire airports page and its functions.
+

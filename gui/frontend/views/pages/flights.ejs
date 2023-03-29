@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+            <br>
+
+    <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+        <h2>Current Flights</h2>
+        <% for (const x in locals.flightsArray) { %>
+<!--            // creates empty list of departing airports-->
+            <% let airportFromList = []%>
+<!--             // creates empty list of airport destinations-->
+            <% let airportToList = []%>
+<!--             // creates empty list of planes flown on-->
+            <% let planeList = []%>
+
+            <% let plane = flightsArray[x].planeid %>
+            <% let airportFrom = flightsArray[x].airportfromid %>
+            <% let airportTo = flightsArray[x].airporttoid %>
+<!--            // gets airport names for arrivals and destinations-->
+            <% for (const x in locals.airportsArray) { %>
+<!--                // finds the departing airport-->
+                <% if (airportsArray[x]["id"] === airportFrom) { %>
+                    <% airportFromList.push(airportsArray[x]["airportname"]) %>
+                <% } %>
+<!--                // finds the destination airport-->
+                <% if (airportsArray[x]["id"] === airportTo) { %>
+                    <% airportToList.push(airportsArray[x]["airportname"])%>
+                <% } %>
+            <% } %>
+            <% for (const x in locals.planesArray) { %>
+                <% if (planesArray[x]["id"] === plane) { %>
+                    <% planeList.push(planesArray[x]) %>
+                <% } %>
+            <% } %>
+    <!--        Parse through all flight data and pull out important info to be displayed-->
+            <% for (const i in airportFromList) { %>
+                <% for (const j in airportToList) { %>
+                    <% for (const k in planeList) { %>
+                        <p> <%= airportFromList[i] + " to " + airportToList[j] + " " + flightsArray[x].date + " " + planeList[k].make + " " + planeList[k].model + " " + planeList[k].capacity %> </p>
+                    <% } %>
+                <% } %>
+            <% } %>
+        <% } %>
+    </div>
+
+    <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+        <h2> Add a Flight </h2>
+      <form action="/process_form_add_flight" class="formClass" method="post">
+        <div class="row">
+          <div class="col">
+              <select name="airportfromid" id="airportfromid" class="form-control" placeholder="Departing From...">
+                      <option value="" disabled selected hidden>Departing From...</option>
+                      <% for (const x in locals.airportsArray) { %>
+                            <option value= <%= airportsArray[x].id %> > <%= airportsArray[x].airportname %> </option>
+                      <% } %>
+                  </select>
+          </div>
+          <div class="col">
+              <select name="airporttoid" id="airporttoid" class="form-control" placeholder="Arriving At...">
+                      <option value="" disabled selected hidden>Arriving At...</option>
+                      <% for (const x in locals.airportsArray) { %>
+                            <option value= <%= airportsArray[x].id %> > <%= airportsArray[x].airportname %> </option>
+                      <% } %>
+                  </select>
+          </div>
+        </div>
+          <div class="row">
+              <div class="col mt-1">
+                <input type="date" class="form-control" id="date" placeholder="Enter Date..." name="date">
+              </div>
+              <div class="col mt-1">
+                  <select name="planeid" id="planeid" class="form-control" placeholder="Choose Plane...">
+                      <option value="" disabled selected hidden>Choose Plane...</option>
+                      <% for (const x in locals.planesArray) { %>
+                            <option value= <%= planesArray[x].id %> > <%= planesArray[x].make %> </option>
+                      <% } %>
+                  </select>
+              </div>
+
+        </div>
+          <div class="row">
+              <div class="col mt-1">
+              <div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+              </div>
+              </div>
+
+          </div>
+      </form>
+    </div>
+    <div class="container-fluid shadow p-4 bg-light" id="formContainer">
+        <h2> Delete a Flight </h2>
+      <form action="/process_form_DELETE_FLIGHT" class="formClass" method="post">
+        <div class="row">
+          <div class="col">
+              <select name="id" id="id" class="form-control" placeholder="Select a flight to delete...">
+                      <option value="" disabled selected hidden>Departing From...</option>
+                    <% airportsfrom = [] %>
+                    <% airportsto = [] %>
+                      <% for (const x in locals.flightsArray) { %>
+                        <% for (const i in locals.airportsArray) { %>
+                        <% if (flightsArray[x].airportfromid === airportsArray[i].id) { %>
+                          <% var airportfrom = airportsArray[i].airportcode %>
+                              <% airportsfrom.push(airportfrom) %>
+                          <%# console.log(airportfrom)%>
+                              <% } %>
+                        <% if (flightsArray[x].airporttoid === airportsArray[i].id) { %>
+                          <% var airportto = airportsArray[i].airportcode %>
+                                <% airportsto.push(airportto) %>
+
+
+                  <% } %>
+                  <% } %>
+
+                  <option value= <%= flightsArray[x].id %> > <%= airportsfrom[x] + " to " + airportsto[x] + " on" + " " +  JSON.stringify(flightsArray[x].date) %> </option>
+                  <% } %>
+
+                  </select>
+          </div>
+        </div>
+          <div class="row">
+              <div class="col mt-1">
+              <div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+              </div>
+              </div>
+
+          </div>
+      </form>
+    </div>
+
+
+
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

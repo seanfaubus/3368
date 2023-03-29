@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+
+
+        <% if (locals.flight) { %>
+            <% var objectLength = Object.keys(locals.flight).length %>
+                <% if (objectLength > 1) { %>
+                    <p>Thanks for adding a flight!</p>
+                <% } else { %>
+                    <p>You have deleted a flight!</p>
+                <% } %>
+
+        <% } %>
+        <% if (locals.plane) { %>
+            <% if (locals.update) { %>
+                <p>Thanks for updating a plane!</p>
+            <% } else if (locals.add) { %>
+                <p>Thanks for adding a plane!</p>
+            <% } else { %>
+                    <p>You have deleted a plane!</p>
+            <% } %>
+
+        <% } %>
+
+        <% if (locals.airport) { %>
+            <% if (locals.add) { %>
+                <p>Thanks for adding an airport!</p>
+            <% } else if (locals.update) { %>
+                <p>Thanks for updating an airport!</p>
+            <% } else { %>
+                    <p>You have deleted an airport!</p>
+            <% } %>
+        <% } %>
+
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

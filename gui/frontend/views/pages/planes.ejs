@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+
+        <h1>Planes</h1>
+    <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+        <% if (locals.planes) { %>
+        <%console.log(locals.planes)%>
+            <% locals.planes.forEach(function(plane) { %>
+
+                <p><strong> <%= plane.make + " " + plane.model + " " + plane.capacity + " " + plane.year %></strong></p>
+        <% }) %>
+        <% } %>
+    </div>
+        <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+            <h2> Add a Plane </h2>
+            <form action="/process_form_add_plane" class="formClass" method="post">
+                    <div class="col">
+                        <input type="text" name="make" placeholder="Make">
+
+                        <input type="text" name="model" placeholder="Model">
+
+                        <input type="number" name="capacity" placeholder="Capacity of Aircraft" min="1" max="1000">
+
+                        <input type="number" name="year" placeholder="Year" min="1800" max="2023">
+
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+            </form>
+        </div>
+        <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+            <h2> Update a Plane </h2>
+            <p>Which plane would you like to update?</p>
+
+            <form action="/process_form_update_plane" class="formClass" method="post">
+                <div class="row">
+                    <div class="col">
+                        <select name="id" id="id" class="form-control" placeholder="Choose Plane...">
+                          <option value="" disabled selected hidden>Choose Plane...</option>
+                          <% for (const x in locals.planes) { %>
+                                <option value= <%= planes[x].id %> > <%= planes[x].make + " " + planes[x].model + " " + planes[x].year %> </option>
+                          <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" name="make" placeholder="Make">
+
+                        <input type="text" name="model" placeholder="Model">
+
+                        <input type="number" name="capacity" placeholder="Capacity of Aircraft" min="1" max="1000">
+
+                        <input type="number" name="year" placeholder="Year" min="1800" max="2023">
+
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-fluid shadow p-4 bg-light" id="formContainer">
+            <h2> Delete a Plane </h2>
+            <form action="/process_form_DELETE_PLANE" class="formClass" method="post">
+                <div class="row">
+                    <div class="col">
+                        <select name="id" id="id" class="form-control" placeholder="Select an airport to delete...">
+                        <option value="" disabled selected hidden>Plane Name...</option>
+                        <% for (const x in locals.planes) { %>
+                           <option value= <%= planes[x].id %>> <%= planes[x].make + " " + planes[x].model + " " + planes[x].year%> </option>
+                        <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mt-1">
+                        <div>
+                            <input class="btn btn-primary" type="submit" value="Submit">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>

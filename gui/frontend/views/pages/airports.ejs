@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <h1>Airports</h1>
+    <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+        <% if (locals.airports) { %>
+        <%console.log(locals.airports)%>
+            <% locals.airports.forEach(function(airport) { %>
+
+                <p><strong> <%= airport.airportcode + " - " + airport.airportname + " - " + airport.country %></strong></p>
+        <% }) %>
+        <% } %>
+    </div>
+        <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+            <h2> Add an Airport </h2>
+            <form action="/process_form_add_airport" class="formClass" method="post">
+                    <div class="col">
+                        <input type="text" name="airportcode" placeholder="Airport_Code">
+
+                        <input type="text" name="airportname" placeholder="Airport_Name">
+
+                        <input type="text" name="country" placeholder="Country of Airport">
+
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+            </form>
+        </div>
+
+        <div class="container-fluid shadow p-4 bg-light mb-3" id="formContainer">
+            <h2> Update an Airport </h2>
+            <p>Which airport would you like to update?</p>
+
+            <form action="/process_form_update_airport" class="formClass" method="post">
+                <div class="row">
+                    <div class="col">
+                        <select name="id" id="id" class="form-control" placeholder="Choose Airport...">
+                          <option value="" disabled selected hidden>Choose Airport...</option>
+                          <% for (const x in locals.airports) { %>
+                                <option value= <%= airports[x].id %> > <%= airports[x].airportcode + " " + airports[x].airportname + " " + airports[x].country %> </option>
+                          <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" name="airportcode" placeholder="Airport_Code">
+
+                        <input type="text" name="airportname" placeholder="Airport_Name">
+
+                        <input type="text" name="country" placeholder="Country of Airport">
+
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-fluid shadow p-4 bg-light" id="formContainer">
+            <h2> Delete an Airport </h2>
+            <form action="/process_form_DELETE_AIRPORT" class="formClass" method="post">
+                <div class="row">
+                    <div class="col">
+                        <select name="id" id="id" class="form-control" placeholder="Select an airport to delete...">
+                        <option value="" disabled selected hidden>Airport Name...</option>
+                        <% for (const x in locals.airports) { %>
+                           <option value= <%= airports[x].id %>> <%= airports[x].airportname%> </option>
+                        <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mt-1">
+                        <div>
+                            <input class="btn btn-primary" type="submit" value="Submit">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+
+
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>
